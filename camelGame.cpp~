@@ -1,0 +1,238 @@
+// Alexis Muñoz, Angel Gonzalez
+// 6 November 2015
+// Camel Game
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
+
+using namespace std;
+
+int THIRST = 0;
+
+int USERMILES = 0;
+int NATIVEMILES = -20;
+int TIREDNESS = 0; 
+int CANTEEN = 3;
+const int GAMEMILES = 200;
+
+void gitIntro();
+//prints intro
+
+char gitChoice();
+//if Q is returned, the int main blows up
+
+void gitEnemyMiles();
+//advances AI at the end of most functions, unless it’s a random event from heatwave
+
+void gitCanteen();
+// just subtracts 1 from the canteen, error if you have no more water to drink (doesn’t waste a turn, so probably add gitChoice() at the end of the function to choose again
+
+void gitStatus();
+//miles traveled
+//thirst/tiredness
+//angry mob behind him miles
+//canteen charges left
+
+//Angel Functions unless it rekts me
+void gitOasis();
+//rand() % 20 + 1
+//if it’s 1, refill canteen, fully rests camel and player
+
+void gitRested();
+//rests the player
+
+void gitFullMiles();
+//function that determines if the player travels 15-30
+//should have a chance at making a random event happen 
+
+void gitMidMiles();
+//function that makes the player travel 5-15
+//void gitRest(); 
+//asks the user if they want to rest for the night
+//print camel is happy
+//reset camel tiredness to 0
+//reset thirst to 100
+//increase native miles 7-14
+
+int main(){
+
+    srand(time(0)); 
+    char done = false;
+    int choice;
+    while (done == false);
+    {
+        if (NATIVEMILES >= USERMILES)
+        {
+            cout << "Natives caught up (should've warded the jungle)" << endl;
+            done = true;
+            
+        }
+        if (THIRST == 6)
+        {
+            cout << "Died of thirst (should've warded Baron)" << endl;
+            done = true;
+        }
+        if (TIREDNESS == 8)
+        {
+            cout << "Your camel is dead from exhaustion (you animal abuser)" << endl;
+            done = true;
+        }
+        if (THIRST == 4 || THIRST == 5)
+        {
+            cout << "Ughh... feel thirsty" << endl;
+        }
+        if (TIREDNESS >= 5 || TIREDNESS <= 7)
+        {
+            cout << "Your camel is feeling tired" << endl;
+        }
+        if (USERMILES - NATIVEMILES <= 15)
+        {
+                cout << "Natives are closing in!" << endl;
+        }
+        
+        //choice = gitChoice();
+        //choice.upper();
+        /*if (choice == q)
+        {
+            continue;
+        {*/
+        while (choice == 'A' && done == false)
+        {
+            if (CANTEEN = 0)
+            {
+                cout << "Your canteen is empty, nothing to drink from" << endl;
+            }
+            else
+            {
+                cout << "You drink from your canteen" << endl;
+            }
+            //choice = gitChoice();
+            //choice.upper();
+        }
+        if (done == false)
+        {
+            if (choice == 'B')
+            {
+            gitMidMiles();
+            }
+            else if (choice == 'C')
+            {
+                gitFullMiles();
+            }
+            else if (choice == 'D')
+            { 
+                //gitStatus();
+            
+            }
+            else if (choice == 'E')
+            {
+                gitRested();
+            }
+        }
+    }
+    return 0;
+}
+void gitIntro()
+{
+    cout << "Welcome to Camel!" << endl;
+    cout << "You have stolen a camel to make your way across the great Mobi desert." << endl;
+    cout << "The natives want their camel back and are chasing you down! Survive " << endl;
+    cout << "your desert trek and out run the natives." << endl;
+
+    return;
+}
+void gitRested()
+{
+
+    cout << "Your camel is happy to know it has a caring master now" << endl;
+    cout << "It'll be fully rested by morning" << endl;
+    TIREDNESS = 0;
+    
+    int AItraveling = rand() % 6 + 7;
+    NATIVEMILES += AItraveling;
+    
+    return;
+
+}
+void gitOasis()
+{
+    int fullRest = rand() % 19 + 1;
+    ////if it’s 1, refill canteen, fully rests camel and player
+    
+    if (fullRest == 1)
+    {
+        CANTEEN = 3;
+        THIRST = 0;
+        TIREDNESS = 0;
+    }
+
+    return;
+}
+
+void gitFullMiles()
+{
+    int traveling = rand() % 14 + 16;
+    int AItraveling = rand() % 6 + 7;
+    int randomEffect = rand() % 3 + 1;
+    
+    if (randomEffect = 1)
+    {
+        if ( randomEffect = 2 )
+        {
+            cout << "Camel was recklessly going too fast!" << endl;
+            cout << "It trips and spranged it's ankle on sand" << endl;
+            traveling -= 5;//travels 5 miles less due to random effect
+            cout << "You traveled for " << traveling << " miles" << endl;
+            USERMILES += traveling;
+            TIREDNESS += 1;
+            
+            NATIVEMILES += AItraveling;
+            
+            return;
+        }
+        else if ( randomEffect = 3 )
+        {
+            cout << "Heat wave, can't travel in this weather!" << endl;
+            cout << "You rest for the day" << endl;
+            
+            THIRST = 0;
+            TIREDNESS = 0;
+            
+            return;
+        }
+        else if ( randomEffect = 4 )
+        {
+            cout << "Fell off the camel because you went too fast!" << endl;
+            traveling -= 10; // travel 10 miles less
+            cout << "You traveled for " << traveling << " miles" << endl;
+            USERMILES += traveling;
+            TIREDNESS += 1;
+            NATIVEMILES += AItraveling;
+            return;
+        }
+       
+    }
+    USERMILES += traveling;
+    TIREDNESS += 2;
+    
+    NATIVEMILES += AItraveling;
+    
+    return;
+} 
+
+void gitMidMiles()
+{
+    int traveling = rand() % 10 + 5;
+    
+    cout << "You traveled for " << traveling << endl;
+    
+    USERMILES += traveling;
+    TIREDNESS += 1;
+    
+    int AItraveling = rand() % 6 + 7;
+    NATIVEMILES += AItraveling;
+    
+    return;
+}
